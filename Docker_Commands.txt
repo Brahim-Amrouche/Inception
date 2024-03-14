@@ -4,9 +4,16 @@ docker stop <container name> \\ to stop the container from runing
 docker rm <container name> \\ to remove the container
 docker rmi <container name> \\ to remove image
 docker run <image name> \\ to run container from image
+docker run --rm <image_id> \\ to run containe and delete it on exit
+DOCKER_BUILDKIT=0 docker build -t so-26220957 . \\ you can see the intermediary build states of a dockerfile image 
+docker run -it --rm <image_name> \\to enter the image in interactive mode 
+
+
+
 docker build --no-cache -t <image_name>:<tag> \\ to build an image with no-cache
 docker rm $(docker ps -a -q) \\ delete all containers
 docker rmi $(docker images -a -q) \\ delete all images
 docker volume rm $(docker volume ls -q) \\ delete all volumes
+
 
 docker system prune -a -f \\ to remove every unsued docker ressource *images, volumes, containers, networks*
