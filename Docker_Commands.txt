@@ -17,3 +17,11 @@ docker volume rm $(docker volume ls -q) \\ delete all volumes
 
 
 docker system prune -a -f \\ to remove every unsued docker ressource *images, volumes, containers, networks*
+
+## this is made to Build the mariadb DockerFile
+docker build --build-arg MARIADB_ROOT_PASSWORD=adm123 --build-arg MARIADB_USER=ME --build-arg MARIADB_USER_PASSWORD=adm123 --build-arg SQL_DB_NAME=Hello -t mariadb:0 .
+
+#this is to create a volume and mount it on my file system
+docker volume create -d local -o type=none -o device=/home/bamrouch/mariadb_volume mariadb_volume
+
+

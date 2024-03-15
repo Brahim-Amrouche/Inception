@@ -17,20 +17,21 @@ RUN apt-get install mariadb-server  mariadb-client -y
 COPY ./conf/my.cnf /etc/mysql/my.cnf
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN service mariadb restart
+ARG MARIADB_ROOT_PASSWORD
+ARG MARIADB_USER
+ARG MARIADB_USER_PASSWORD
+ARG SQL_DB_NAME
 
-RUN mariadb-admin create inception || true
+RUN service mariadb start && \
+    mariadb-admin -u root password $MARIADB_ROOT_PASSWORD && \
+    mariadb -e "CREATE DATABASE IF NOT EXISTS $SQL_DB_NAME;" && \
+    mariadb -e "CREATE USER '$MARIADB_USER'@'localhost' IDENTIFIED BY '$MARIADB_USER_PASSWORD';" && \
+    mariadb -e "GRANT ALL PRIVILEGES ON $SQL_DB_NAME.* TO '$MARIADB_USER'@'localhost' IDENTIFIED BY '$MARIADB_USER_PASSWORD';" && \
+    mariadb -e "FLUSH PRIVILEGES;"
 
-#ENV MARIADB_ROOT_PASSWORD=$MARIADB_ROOT_PASSWORD
-#ENV MARIADB_USER
-#ENV MARIADB_USER_PASSWORD
-
-#RUN mariadb -e "UPDATE mysql.user SET Password = PASSWORD('${MARIADB_ROOT_PASSWORD}') WHERE User = 'root'"
-
-
-#USER mysql
+USER mysql
 
 EXPOSE 3306
 
-CMD ["bash", "-c", ""]
+CMD ["mariadbd"]
 
