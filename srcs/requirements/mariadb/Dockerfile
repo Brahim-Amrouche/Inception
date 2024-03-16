@@ -14,6 +14,8 @@ RUN apt-get update -y && apt-get upgrade -y
 #install mariadb
 RUN apt-get install mariadb-server  mariadb-client -y
 
+VOLUME /var/lib/mysql
+
 COPY ./conf/my.cnf /etc/mysql/my.cnf
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 

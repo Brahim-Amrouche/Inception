@@ -20,8 +20,11 @@ docker system prune -a -f \\ to remove every unsued docker ressource *images, vo
 
 ## this is made to Build the mariadb DockerFile
 docker build --build-arg MARIADB_ROOT_PASSWORD=adm123 --build-arg MARIADB_USER=ME --build-arg MARIADB_USER_PASSWORD=adm123 --build-arg SQL_DB_NAME=Hello -t mariadb:0 .
+## this is to run the mariadb container need to make the volume first
+docker run --rm -v mariadb_volume:/var/lib/mysql --name mariadb mariadb:0
 
-#this is to create a volume and mount it on my file system
-docker volume create -d local -o type=none -o device=/home/bamrouch/mariadb_volume mariadb_volume
+#this is to create a volume and mount it on my file system in this case for mariadb, that o=bind is related to the linux filesystem , exactly to the mount command.
+#it allows you to share files accross with the vm , whatever happens in the binded folder happens in the vm, it's both for persisting data , and having access to it
+docker volume create --driver local --opt type=none --opt device=/home/bamrouch/mariadb_volume --opt o=bind mariadb_volume
 
 
