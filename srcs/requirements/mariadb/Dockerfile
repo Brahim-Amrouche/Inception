@@ -27,8 +27,8 @@ ARG SQL_DB_NAME
 RUN service mariadb start && \
     mariadb-admin -u root password $MARIADB_ROOT_PASSWORD && \
     mariadb -e "CREATE DATABASE IF NOT EXISTS $SQL_DB_NAME;" && \
-    mariadb -e "CREATE USER '$MARIADB_USER'@'localhost' IDENTIFIED BY '$MARIADB_USER_PASSWORD';" && \
-    mariadb -e "GRANT ALL PRIVILEGES ON $SQL_DB_NAME.* TO '$MARIADB_USER'@'localhost' IDENTIFIED BY '$MARIADB_USER_PASSWORD';" && \
+    mariadb -e "CREATE USER '$MARIADB_USER'@'%' IDENTIFIED BY '$MARIADB_USER_PASSWORD';" && \
+    mariadb -e "GRANT ALL PRIVILEGES ON $SQL_DB_NAME.* TO '$MARIADB_USER'@'%' IDENTIFIED BY '$MARIADB_USER_PASSWORD';" && \
     mariadb -e "FLUSH PRIVILEGES;"
 
 USER mysql

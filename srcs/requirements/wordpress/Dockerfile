@@ -22,4 +22,11 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     chmod +x wp-cli.phar && \
     mv wp-cli.phar /usr/local/bin/wp
 
+WORKDIR /var/www/wordpress
+
+RUN wp --allow-root core download --version=6.4.3
+
+#RUN wp --allow-root config create --dbname=Test --dbuser=bamrouch --dbpass=adm123 --dbhost=mariadb:3306
+
+
 CMD ["bash"]
