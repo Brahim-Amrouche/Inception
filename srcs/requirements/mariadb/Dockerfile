@@ -7,7 +7,7 @@ RUN apt-get update -y && apt-get upgrade  -y
 RUN apt-get install curl -y
 
 #curl the mariadb repository to get the latest stable mariabd    
-RUN curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | bash -s -- --mariadb-server-version=11.3
+RUN curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | bash -s -- --mariadb-server-version=11.1
 #update repostiories again
 RUN apt-get update -y && apt-get upgrade -y
 

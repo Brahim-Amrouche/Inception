@@ -3,12 +3,8 @@ FROM debian:bullseye-20240311
 #update repostiories
 RUN apt-get update -y && apt-get upgrade  -y
 
-#installing curl gnupg
+#installing curl and debian tools to add external packages
 RUN apt-get install curl lsb-release apt-transport-https ca-certificates -y
-
-#update php  ppa repository for apt-get 
-#RUN apt-get install software-properties-common -y && \
-    #add-apt-repository ppa:ondrej/php
 
 RUN curl -sSL -o /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
     echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list
@@ -26,7 +22,8 @@ WORKDIR /var/www/wordpress
 
 RUN wp --allow-root core download --version=6.4.3
 
-#RUN wp --allow-root config create --dbname=Test --dbuser=bamrouch --dbpass=adm123 --dbhost=mariadb:3306
+COPY ./tools/wordpress_install.sh /home/wordpress_install.sh
 
+RUN chmod u+x /home/wordpress_install.sh
 
-CMD ["bash"]
+CMD ["bash", "/home/wordpress_install.sh"]
