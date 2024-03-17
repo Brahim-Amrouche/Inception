@@ -30,7 +30,7 @@ docker run --rm --name mariadb -v mariadb_volume:/var/lib/mysql -p 3306:3306 --n
 docker volume create --driver local --opt type=none --opt device=/home/bamrouch/mariadb_volume --opt o=bind mariadb_volume
 
 #to run wordpress and bind it to inception network
-docker run --rm --name wordpress --network inception  -it wordpress:0
+docker run --rm --name wordpress --network inception wordpress:0
 
 #to create a bridge network for my containers
 docker network create -d bridge <name>

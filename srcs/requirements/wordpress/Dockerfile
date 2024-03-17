@@ -24,6 +24,10 @@ RUN wp --allow-root core download --version=6.4.3
 
 COPY ./tools/wordpress_install.sh /home/wordpress_install.sh
 
-RUN chmod u+x /home/wordpress_install.sh
+RUN chmod u+x /home/wordpress_install.sh && \
+    mkdir /run/php/ && chown www-data:www-data /run/php
+
+COPY  ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
+COPY ./conf/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf
 
 CMD ["bash", "/home/wordpress_install.sh"]
