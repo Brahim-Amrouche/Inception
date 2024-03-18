@@ -1,10 +1,12 @@
 #!/bin/bash
 
-echo ">> Configuring Wordpress <<" $sql_db_name "||"  $mariadb_user "||" $mariadb_user_password 
-wp --allow-root config create --dbname=$sql_db_name --dbuser=$mariadb_user --dbpass=$mariadb_user_password --dbhost=mariadb:3306 --dbcharset=utf8mb4
+#source /etc/bash.bashrc
 
-echo ">> Installing Wordpress <<" $wordpress_url "||" $wordpress_website_title "||" $wordpress_admin_user "||" $wordpress_admin_user "||" $wordpress_admin_password "||" $wordpress_admin_email
-wp --allow-root core install --url=$wordpress_url --title=$wordpress_website_title --admin_user=$wordpress_admin_user --admin_password=$wordpress_admin_password --admin_email=$wordpress_admin_email
+echo ">> Configuring Wordpress << $MARIADB_USER with password $MARIADB_USER_PASSWORD on table $SQL_DB_NAME" 
+wp --allow-root config create --dbname=$SQL_DB_NAME --dbuser=$MARIADB_USER --dbpass=$MARIADB_USER_PASSWORD --dbhost=mariadb:3306 --dbcharset=utf8mb4
+
+echo ">> Installing Wordpress << $WORDPRESS_URL with tile of $WORDPRESS_WEBSITE_TITLE and $WORDPRESS_ADMIN_USER with $WORDPRESS_ADMIN_PASSWORD and email of $WORDPRESS_ADMIN_EMAIL" 
+wp --allow-root core install --url=$WORDPRESS_URL --title=$WORDPRESS_WEBSITE_TITLE --admin_user=$WORDPRESS_ADMIN_USER --admin_password=$WORDPRESS_ADMIN_PASSWORD --admin_email=$WORDPRESS_ADMIN_EMAIL
 
 echo ">> Wordpress Finished Installing <<"
 
