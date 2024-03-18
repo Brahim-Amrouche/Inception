@@ -33,8 +33,8 @@ docker run --rm --name mariadb -v mariadb_volume:/var/lib/mysql -p 3306:3306 --n
 #it allows you to share files accross with the vm , whatever happens in the binded folder happens in the vm, it's both for persisting data , and having access to it
 docker volume create --driver local --opt type=none --opt device=/home/bamrouch/mariadb_volume --opt o=bind mariadb_volume
 
-#to run wordpress and bind it to inception network
-docker run --rm --name wordpress --network inception wordpress:0
+#to run wordpress and bind it to inception network and with external volume
+docker run --rm --name wordpress -v wordpress_volume:/var/www/wordpress --network inception wordpress:0
 
 #to create a bridge network for my containers
 docker network create -d bridge <name>

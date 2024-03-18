@@ -53,12 +53,7 @@ ARG WORDPRESS_URL
 ARG WORDPRESS_WEBSITE_TITLE
 ARG WORDPRESS_ADMIN_EMAIL
 
-CMD ["bash", "/home/wordpress_install.sh", \
-    "--mariadb_user=${MARIADB_USER}", \
-    "--mariadb_user_password=${MARIADB_USER_PASSWORD}", \
-    "--sql_db_name=${SQL_DB_NAME}", \
-    "--wordpress_admin_user=${WORDPRESS_ADMIN_USER}", \
-    "--wordpress_admin_password=${WORDPRESS_ADMIN_PASSWORD}", \
-    "--wordpress_url=${WORDPRESS_URL}", \
-    "--wordpress_website_title=${WORDPRESS_WEBSITE_TITLE}", \
-    "--wordpress_admin_email=${WORDPRESS_ADMIN_EMAIL}"]
+RUN echo "MARIADB_USER=${MARIADB_USER}" >> /etc/environment
+
+
+CMD ["bash", "/home/wordpress_install.sh"]
