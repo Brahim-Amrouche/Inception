@@ -21,6 +21,10 @@ docker system prune -a -f \\ to remove every unsued docker ressource *images, vo
 
 ## this is made to Build the mariadb DockerFile
 docker build --build-arg MARIADB_ROOT_PASSWORD=adm123 --build-arg MARIADB_USER=bamrouch --build-arg MARIADB_USER_PASSWORD=adm123 --build-arg SQL_DB_NAME=Test -t mariadb:0 .
+
+# this is to build the Wordpress Dockerfile
+docker build --build-arg MARIADB_USER=bamrouch --build-arg MARIADB_USER_PASSWORD=adm123 --build-arg SQL_DB_NAME=Test --build-arg WORDPRESS_ADMIN_USER=bamrouch_admin --build-arg WORDPRESS_ADMIN_PASSWORD=adm123 --build-arg WORDPRESS_URL=test.com --build-arg WORDPRESS_WEBSITE_TITLE=Test --build-arg WORDPRESS_ADMIN_EMAIL=amroucheb4@gmail.com  -t wordpress:0 .
+
 ## this is to run the mariadb container need to make the volume first
 docker run --rm --name mariadb -v mariadb_volume:/var/lib/mysql -p 3306:3306 --network inception mariadb:0
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo ">> Configuring Wordpress <<" 
-wp --allow-root config create --dbname=Test --dbuser=bamrouch --dbpass=adm123 --dbhost=mariadb:3306 --dbcharset=utf8mb4
+wp --allow-root config create --dbname="$sql_db_name" --dbuser="$mariadb_user" --dbpass="$mariadb_user_password" --dbhost=mariadb:3306 --dbcharset=utf8mb4
 
 echo ">> Installing Wordpress <<"
-wp --allow-root core install --url=test.com --title=Test --admin_user=bamrouch_admin --admin_password=adm123 --admin_email=amroucheb4@gmail.com
+wp --allow-root core install --url="$wordpress_url" --title="$wordpress_website_title" --admin_user="$wordpress_admin_user" --admin_password="$wordpress_admin_password" --admin_email="$wordpress_admin_email"
 
 echo ">> Wordpress Finished Installing <<"
 
