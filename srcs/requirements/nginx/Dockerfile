@@ -22,7 +22,7 @@ ENV CERTIFICATE_PATH=${CERTIFICATE_PATH}
 ARG CERTIFICATE_KEY_PATH
 ENV CERTIFICATE_KEY_PATH=${CERTIFICATE_KEY_PATH}
 
-COPY ./conf/default.conf  /etc/nginx/conf.d/default.conf
+COPY ./conf/template_conf  /etc/nginx/conf.d/template_conf
 COPY ./tools/nginx_conf.sh /home/nginx_conf.sh
 
 RUN chmod u+x /home/nginx_conf.sh

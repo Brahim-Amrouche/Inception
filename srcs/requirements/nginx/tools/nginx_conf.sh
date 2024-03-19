@@ -7,6 +7,7 @@ export SCRIPTS_PATH='$document_root$fastcgi_script_name'
 export ARGS='$args'
 export URI='$uri'
 
-envsubst < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/defaul.conf
+envsubst < /etc/nginx/conf.d/template_conf > /etc/nginx/conf.d/defaul.conf
+
 
 nginx -g 'daemon off;'
