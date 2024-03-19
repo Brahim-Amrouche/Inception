@@ -2,7 +2,7 @@ FROM debian:bullseye-20240311
 
 RUN apt-get update -y && apt-get upgrade -y
 
-RUN apt install curl gnupg2 ca-certificates lsb-release debian-archive-keyring openssl -y
+RUN apt install curl gnupg2 ca-certificates lsb-release debian-archive-keyring openssl gettext -y
 
 RUN curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
     | tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null

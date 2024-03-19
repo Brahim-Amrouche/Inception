@@ -25,6 +25,9 @@ docker build --build-arg MARIADB_ROOT_PASSWORD=adm123 --build-arg MARIADB_USER=b
 # this is to build the Wordpress Dockerfile
 docker build --build-arg MARIADB_USER=bamrouch --build-arg MARIADB_USER_PASSWORD=adm123 --build-arg SQL_DB_NAME=Test --build-arg WORDPRESS_ADMIN_USER=bamrouch_admin --build-arg WORDPRESS_ADMIN_PASSWORD=adm123 --build-arg WORDPRESS_URL=test.com --build-arg WORDPRESS_WEBSITE_TITLE=Test --build-arg WORDPRESS_ADMIN_EMAIL=amroucheb4@gmail.com  -t wordpress:0 .
 
+#this is to build Nginx DockerFile
+docker build --build-arg WORDPRESS_URL=test.com --build-arg CERTIFICATE_PATH=/etc/ssl/private/inception.crt --build-arg CERTIFICATE_KEY_PATH=/etc/ssl/private/inception.key  -t nginx:0 .
+
 ## this is to run the mariadb container need to make the volume first
 docker run --rm --name mariadb -v mariadb_volume:/var/lib/mysql --network inception mariadb:0
 
@@ -37,7 +40,7 @@ docker volume create --driver local --opt type=none --opt device=/home/bamrouch/
 docker run --rm --name wordpress -v wordpress_volume:/var/www/wordpress --network inception wordpress:0
 
 #to run nginx container
-docker run --rm -it --name nginx --network inception -p 443:443 nginx:0
+docker run --rm --name nginx --network inception -p 443:443 nginx:0
 
 #to create a bridge network for my containers
 docker network create -d bridge <name>
