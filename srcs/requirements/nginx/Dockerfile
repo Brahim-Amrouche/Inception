@@ -2,7 +2,7 @@ FROM debian:bullseye-20240311
 
 RUN apt-get update -y && apt-get upgrade -y
 
-RUN apt install curl gnupg2 ca-certificates lsb-release debian-archive-keyring -y
+RUN apt install curl gnupg2 ca-certificates lsb-release debian-archive-keyring openssl -y
 
 RUN curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
     | tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
@@ -15,6 +15,18 @@ RUN apt-get update -y && apt-get upgrade -y
 
 RUN apt-get install nginx
 
+ARG WORDPRESS_URL
+ENV WORDPRESS_URL=${WORDPRESS_URL}
+ARG CERTIFICATE_PATH
+ENV CERTIFICATE_PATH=${CERTIFICATE_PATH}
+ARG CERTIFICATE_KEY_PATH
+ENV CERTIFICATE_KEY_PATH=${CERTIFICATE_KEY_PATH}
+
+COPY ./conf/default.conf  /etc/nginx/conf.d/default.conf
+COPY ./tools/nginx_conf.sh /home/nginx_conf.sh
+
+RUN chmod u+x /home/nginx_conf.sh
+
 EXPOSE 443
 
-CMD bash
+CMD /home/nginx_conf.sh
