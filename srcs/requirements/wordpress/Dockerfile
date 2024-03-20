@@ -31,7 +31,8 @@ COPY ./tools/wordpress_install.sh /home/wordpress_install.sh
 
 #changing the script to become executable , and creating a directory that fpm will need
 RUN chmod u+x /home/wordpress_install.sh && \
-    mkdir /run/php/ && chown www-data:www-data /run/php
+    mkdir /run/php/ && chown www-data:www-data /run/php && \
+    chown -R www-data:www-data /var/www/wordpress
 
 #Copying configuration of fpm
 COPY  ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
@@ -60,5 +61,6 @@ ARG WORDPRESS_WEBSITE_TITLE
 ENV WORDPRESS_WEBSITE_TITLE=${WORDPRESS_WEBSITE_TITLE}
 ARG WORDPRESS_ADMIN_EMAIL
 ENV WORDPRESS_ADMIN_EMAIL=${WORDPRESS_ADMIN_EMAIL}
+
 
 CMD /home/wordpress_install.sh
