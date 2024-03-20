@@ -7,9 +7,11 @@ server {
     ssl_certificate $CERTIFICATE_PATH;
     ssl_certificate_key $CERTIFICATE_KEY_PATH;
     ssl_protocols TLSv1.2 TLSv1.3;
+    root /var/www/wordpress;
+    index index.php;
 
     location / {
-        try_files $URI $URI/ /index.php?$ARGS;
+        try_files $URI $URI/ =404;
     }
 
     location ~ \.php$ {

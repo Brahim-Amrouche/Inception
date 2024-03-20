@@ -20,13 +20,13 @@ docker volume rm $(docker volume ls -q) \\ delete all volumes
 docker system prune -a -f \\ to remove every unsued docker ressource *images, volumes, containers, networks*
 
 ## this is made to Build the mariadb DockerFile
-docker build --build-arg MARIADB_ROOT_PASSWORD=adm123 --build-arg MARIADB_USER=bamrouch --build-arg MARIADB_USER_PASSWORD=adm123 --build-arg SQL_DB_NAME=Test -t mariadb:0 .
+docker build --build-arg MARIADB_ROOT_PASSWORD=adm123 --build-arg MARIADB_USER=bamrouch --build-arg MARIADB_USER_PASSWORD=adm123 --build-arg SQL_DB_NAME=Inception -t mariadb:0 .
 
 # this is to build the Wordpress Dockerfile
-docker build --build-arg MARIADB_USER=bamrouch --build-arg MARIADB_USER_PASSWORD=adm123 --build-arg SQL_DB_NAME=Test --build-arg WORDPRESS_ADMIN_USER=bamrouch_admin --build-arg WORDPRESS_ADMIN_PASSWORD=adm123 --build-arg WORDPRESS_URL=test.com --build-arg WORDPRESS_WEBSITE_TITLE=Test --build-arg WORDPRESS_ADMIN_EMAIL=amroucheb4@gmail.com  -t wordpress:0 .
+docker build --build-arg MARIADB_USER=bamrouch --build-arg MARIADB_USER_PASSWORD=adm123 --build-arg SQL_DB_NAME=Inception --build-arg WORDPRESS_ADMIN_USER=bamrouch_admin --build-arg WORDPRESS_ADMIN_PASSWORD=adm123 --build-arg WORDPRESS_URL=bamrouch.42.fr --build-arg WORDPRESS_WEBSITE_TITLE=Inception --build-arg WORDPRESS_ADMIN_EMAIL=amroucheb4@gmail.com  -t wordpress:0 .
 
 #this is to build Nginx DockerFile
-docker build --build-arg WORDPRESS_URL=test.com --build-arg CERTIFICATE_PATH=/etc/ssl/private/inception.crt --build-arg CERTIFICATE_KEY_PATH=/etc/ssl/private/inception.key  -t nginx:0 .
+docker build --build-arg WORDPRESS_URL=bamrouch.42.fr --build-arg CERTIFICATE_PATH=/etc/ssl/private/inception.crt --build-arg CERTIFICATE_KEY_PATH=/etc/ssl/private/inception.key  -t nginx:0 .
 
 ## this is to run the mariadb container need to make the volume first
 docker run --rm --name mariadb -v mariadb_vol:/var/lib/mysql --network inception mariadb:0
