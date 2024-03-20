@@ -29,7 +29,7 @@ docker build --build-arg MARIADB_USER=bamrouch --build-arg MARIADB_USER_PASSWORD
 docker build --build-arg WORDPRESS_URL=test.com --build-arg CERTIFICATE_PATH=/etc/ssl/private/inception.crt --build-arg CERTIFICATE_KEY_PATH=/etc/ssl/private/inception.key  -t nginx:0 .
 
 ## this is to run the mariadb container need to make the volume first
-docker run --rm --name mariadb -v mariadb_volume:/var/lib/mysql --network inception mariadb:0
+docker run --rm --name mariadb -v mariadb_vol:/var/lib/mysql --network inception mariadb:0
 
 
 #this is to create a volume and mount it on my file system in this case for mariadb, that o=bind is related to the linux filesystem , exactly to the mount command.
@@ -37,7 +37,7 @@ docker run --rm --name mariadb -v mariadb_volume:/var/lib/mysql --network incept
 docker volume create --driver local --opt type=none --opt device=/home/bamrouch/mariadb_volume --opt o=bind mariadb_volume
 
 #to run wordpress and bind it to inception network and with external volume
-docker run --rm --name wordpress -v wordpress_volume:/var/www/wordpress --network inception wordpress:0
+docker run --rm --name wordpress -v wordpress_vol:/var/www/wordpress --network inception wordpress:0
 
 #to run nginx container
 docker run --rm --name nginx --network inception -p 443:443 nginx:0

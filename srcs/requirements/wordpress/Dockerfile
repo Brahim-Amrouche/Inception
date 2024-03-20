@@ -32,14 +32,14 @@ COPY ./tools/wordpress_install.sh /home/wordpress_install.sh
 #changing the script to become executable , and creating a directory that fpm will need
 RUN chmod u+x /home/wordpress_install.sh && \
     mkdir /run/php/ && chown www-data:www-data /run/php && \
-    chown -R www-data:www-data /var/www/wordpress
+    chmod -R 775 /var/www/wordpress
 
 #Copying configuration of fpm
 COPY  ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY ./conf/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf
 
 #to keep data untouched 
-VOLUME /var/www/wordpress
+#VOLUME /var/www/wordpress
 
 #opening the port 9000 to communicate with nginx
 EXPOSE 9000
