@@ -1,11 +1,79 @@
 version : '3.8'
 
+# env_files:
+#   - .env
+
 services:
     mariadb:
       build:
         context: ./requirements/mariadb
         dockerfile: Dockerfile
+        args:
+          MARIADB_ROOT_PASSWORD : ${MARIADB_ROOT_PASSWORD}
+          MARIADB_USER : ${MARIADB_USER}
+          MARIADB_USER_PASSWORD : ${MARIADB_USER_PASSWORD}
+          SQL_DB_NAME : ${SQL_DB_NAME}
+      image: mariadb:local
       volumes:
-        -mariadb_volume:/var/lib/mysql
+        - mariadb_volume:/var/lib/mysql
       networks:
-        -inception
+        - inception
+      container_name: mariadb
+    wordpress:
+      build:
+        context: ./requirements/wordpress
+        dockerfile: Dockerfile
+        args:
+          MARIADB_USER : ${MARIADB_USER}
+          MARIADB_USER_PASSWORD : ${MARIADB_USER_PASSWORD}
+          SQL_DB_NAME : ${SQL_DB_NAME}
+          WORDPRESS_ADMIN_USER : ${WORDPRESS_ADMIN_USER}
+          WORDPRESS_ADMIN_PASSWORD : ${WORDPRESS_ADMIN_PASSWORD}
+          WORDPRESS_URL : ${WORDPRESS_URL}
+          WORDPRESS_WEBSITE_TITLE : ${WORDPRESS_WEBSITE_TITLE}
+          WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
+      image: wordpress:local
+      depends_on:
+        - mariadb
+      volumes:
+        - wordpress_volume:/var/www/wordpress
+      networks:
+        - inception
+      container_name: wordpress
+    nginx:
+      build:
+        context: ./requirements/nginx
+        dockerfile: Dockerfile
+        args:
+          WORDPRESS_URL : ${WORDPRESS_URL}
+          CERTIFICATE_PATH : ${CERTIFICATE_PATH}
+          CERTIFICATE_KEY_PATH : ${CERTIFICATE_KEY_PATH}
+      image: nginx:local
+      depends_on:
+        - wordpress
+      volumes:
+        - wordpress_volume:/var/www/wordpress
+      networks:
+        - inception
+      ports:
+        - "443:443"
+      container_name: nginx
+
+networks:
+  inception:
+    driver: bridge
+    name: inception
+
+volumes:
+  mariadb_volume:
+    name: mariadb_volume
+    driver_opts:
+      type: none
+      device: /home/bamrouch/data/mariadb
+      o: bind
+  wordpress_volume:
+    name: wordpress_volume
+    driver_opts:
+      type: none
+      device: /home/bamrouch/data/wordpress
+      o: bind

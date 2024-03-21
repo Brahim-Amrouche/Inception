@@ -3,6 +3,7 @@
 #source /etc/bash.bashrc
 
 echo ">> Configuring Wordpress << $MARIADB_USER with password $MARIADB_USER_PASSWORD on table $SQL_DB_NAME" 
+sleep 5
 wp --allow-root config create --dbname=$SQL_DB_NAME --dbuser=$MARIADB_USER --dbpass=$MARIADB_USER_PASSWORD --dbhost=mariadb:3306 --dbcharset=utf8mb4
 
 echo ">> Installing Wordpress << $WORDPRESS_URL with tile of $WORDPRESS_WEBSITE_TITLE and $WORDPRESS_ADMIN_USER with $WORDPRESS_ADMIN_PASSWORD and email of $WORDPRESS_ADMIN_EMAIL" 
