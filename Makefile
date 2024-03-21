@@ -10,7 +10,7 @@ mariadb:
 	docker-compose -f ${COMPOSE_FILE} --env-file ${ENV_PATH} up -d --force-recreate --no-deps --build mariadb
 
 clean:
-	docker-compose -f ${COMPOSE_FILE} down --rmi local
+	docker-compose -f ${COMPOSE_FILE} down
 
 fclean: clean
 	docker system prune -af
