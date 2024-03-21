@@ -35,7 +35,7 @@ docker run --rm --name mariadb -v mariadb_vol:/var/lib/mysql --network inception
 docker run --rm --name wordpress -v wordpress_vol:/var/www/wordpress --network inception wordpress:0
 
 #to run nginx container
-docker run --rm --name nginx --network inception -p 443:443 nginx:0
+docker run --rm --name nginx --network inception -v wordpress_vol:/var/www/wordpress -p 443:443 nginx:0
 
 
 #this is to create a volume and mount it on my file system in this case for mariadb, that o=bind is related to the linux filesystem , exactly to the mount command.

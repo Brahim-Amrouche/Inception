@@ -1,0 +1,11 @@
+version : '3.8'
+
+services:
+    mariadb:
+      build:
+        context: ./requirements/mariadb
+        dockerfile: Dockerfile
+      volumes:
+        -mariadb_volume:/var/lib/mysql
+      networks:
+        -inception

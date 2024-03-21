@@ -25,7 +25,8 @@ ENV CERTIFICATE_KEY_PATH=${CERTIFICATE_KEY_PATH}
 COPY ./conf/template_conf  /etc/nginx/conf.d/template_conf
 COPY ./tools/nginx_conf.sh /home/nginx_conf.sh
 
-RUN chmod u+x /home/nginx_conf.sh
+RUN chmod u+x /home/nginx_conf.sh && \
+    mkdir -p /var/www/wordpress
 
 EXPOSE 443
 

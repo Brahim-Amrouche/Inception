@@ -2,8 +2,6 @@ server {
     listen       443 ssl;
     server_name  $WORDPRESS_URL;
 
-    #access_log  /var/log/nginx/host.access.log  main;
-
     ssl_certificate $CERTIFICATE_PATH;
     ssl_certificate_key $CERTIFICATE_KEY_PATH;
     ssl_protocols TLSv1.2 TLSv1.3;
@@ -17,7 +15,6 @@ server {
     location ~ \.php$ {
         include        fastcgi_params;
         fastcgi_pass   wordpress:9000;
-        fastcgi_index  index.php;
         fastcgi_param  SCRIPT_FILENAME  $SCRIPTS_PATH;
     }
 
