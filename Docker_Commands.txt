@@ -31,16 +31,16 @@ docker build --build-arg WORDPRESS_URL=bamrouch.42.fr --build-arg CERTIFICATE_PA
 ## this is to run the mariadb container need to make the volume first
 docker run --rm --name mariadb -v mariadb_vol:/var/lib/mysql --network inception mariadb:0
 
-
-#this is to create a volume and mount it on my file system in this case for mariadb, that o=bind is related to the linux filesystem , exactly to the mount command.
-#it allows you to share files accross with the vm , whatever happens in the binded folder happens in the vm, it's both for persisting data , and having access to it
-docker volume create --driver local --opt type=none --opt device=/home/bamrouch/mariadb_volume --opt o=bind mariadb_volume
-
 #to run wordpress and bind it to inception network and with external volume
 docker run --rm --name wordpress -v wordpress_vol:/var/www/wordpress --network inception wordpress:0
 
 #to run nginx container
 docker run --rm --name nginx --network inception -p 443:443 nginx:0
+
+
+#this is to create a volume and mount it on my file system in this case for mariadb, that o=bind is related to the linux filesystem , exactly to the mount command.
+#it allows you to share files accross with the vm , whatever happens in the binded folder happens in the vm, it's both for persisting data , and having access to it
+docker volume create --driver local --opt type=none --opt device=/home/bamrouch/mariadb_volume --opt o=bind mariadb_volume
 
 #to create a bridge network for my containers
 docker network create -d bridge <name>
