@@ -9,8 +9,11 @@ all:
 mariadb:
 	docker-compose -f ${COMPOSE_FILE} --env-file ${ENV_PATH} up -d --force-recreate --no-deps --build mariadb
 
-clean:
+down :
 	docker-compose -f ${COMPOSE_FILE} down
+
+clean :
+	-docker-compose -f ${COMPOSE_FILE} down --rmi all
 
 fclean: clean
 	docker system prune -af

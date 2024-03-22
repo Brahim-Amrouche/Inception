@@ -13,7 +13,7 @@ services:
           MARIADB_USER : ${MARIADB_USER}
           MARIADB_USER_PASSWORD : ${MARIADB_USER_PASSWORD}
           SQL_DB_NAME : ${SQL_DB_NAME}
-      image: mariadb:local
+      image: mariadb:inception
       volumes:
         - mariadb_volume:/var/lib/mysql
       networks:
@@ -32,9 +32,10 @@ services:
           WORDPRESS_URL : ${WORDPRESS_URL}
           WORDPRESS_WEBSITE_TITLE : ${WORDPRESS_WEBSITE_TITLE}
           WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
-      image: wordpress:local
+      image: wordpress:inception
       depends_on:
         - mariadb
+        - redis
       volumes:
         - wordpress_volume:/var/www/wordpress
       networks:
@@ -48,7 +49,7 @@ services:
           WORDPRESS_URL : ${WORDPRESS_URL}
           CERTIFICATE_PATH : ${CERTIFICATE_PATH}
           CERTIFICATE_KEY_PATH : ${CERTIFICATE_KEY_PATH}
-      image: nginx:local
+      image: nginx:inception
       depends_on:
         - wordpress
       volumes:
@@ -58,6 +59,16 @@ services:
       ports:
         - "443:443"
       container_name: nginx
+    redis:
+        build:
+          context: ./requirements/bonus/redis
+          dockerfile: Dockerfile
+          args:
+            REDIS_AUTH_PASSWORD : ${REDIS_AUTH_PASSWORD}
+        image: redis:inception
+        networks:
+          - inception
+        container_name: redis
 
 networks:
   inception:

@@ -17,8 +17,6 @@ RUN make && make install
 
 ARG REDIS_AUTH_PASSWORD
 
-RUN sed -i "s/# requirepass foobared/requirepass ${REDIS_AUTH_PASSWORD}/" redis.conf
-
 EXPOSE 6379
 
 CMD redis-server

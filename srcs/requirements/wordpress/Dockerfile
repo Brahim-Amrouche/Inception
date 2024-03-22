@@ -13,7 +13,7 @@ RUN curl -sSL -o /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/ap
 RUN apt-get update -y
 
 #installing php8.2 and it's modules
-RUN apt-get install php8.2 php8.2-fpm php8.2-mysql -y
+RUN apt-get install php8.2 php8.2-fpm php8.2-mysql php8.2-redis -y
 
 #installing the wp-cli to easily install wordpress
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
@@ -61,6 +61,7 @@ ARG WORDPRESS_WEBSITE_TITLE
 ENV WORDPRESS_WEBSITE_TITLE=${WORDPRESS_WEBSITE_TITLE}
 ARG WORDPRESS_ADMIN_EMAIL
 ENV WORDPRESS_ADMIN_EMAIL=${WORDPRESS_ADMIN_EMAIL}
-
+ARG REDIS_AUTH_PASSWORD
+ENV REDIS_AUTH_PASSWORD=${REDIS_AUTH_PASSWORD}
 
 CMD /home/wordpress_install.sh
