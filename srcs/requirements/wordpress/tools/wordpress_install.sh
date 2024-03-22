@@ -12,10 +12,10 @@ echo ">> Installing Wordpress << $WORDPRESS_URL with tile of $WORDPRESS_WEBSITE_
 
 wp --allow-root core install --url=$WORDPRESS_URL --title=$WORDPRESS_WEBSITE_TITLE --admin_user=$WORDPRESS_ADMIN_USER --admin_password=$WORDPRESS_ADMIN_PASSWORD --admin_email=$WORDPRESS_ADMIN_EMAIL
 
+
 wp --allow-root plugin install redis-cache --activate
 wp --allow-root config set WP_REDIS_HOST "redis"
 wp --allow-root config set WP_REDIS_PORT "6379"
-wp --allow-root config set WP_REDIS_AUTH "${REDIS_AUTH_PASSWORD}"
 wp --allow-root config set WP_CACHE true --raw
 wp --allow-root redis flush
 wp --allow-root redis enable

@@ -15,8 +15,6 @@ COPY ./conf/redis.conf /home/redis-stable/redis.conf
 
 RUN make && make install
 
-ARG REDIS_AUTH_PASSWORD
-
 EXPOSE 6379
 
-CMD redis-server
+CMD redis-server /home/redis-stable/redis.conf
