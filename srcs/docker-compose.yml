@@ -51,6 +51,7 @@ services:
           WORDPRESS_URL : ${WORDPRESS_URL}
           CERTIFICATE_PATH : ${CERTIFICATE_PATH}
           CERTIFICATE_KEY_PATH : ${CERTIFICATE_KEY_PATH}
+          STATIC_WEB_URL : ${STATIC_WEB_URL}
       image: nginx:inception
       depends_on:
         - wordpress
@@ -92,13 +93,30 @@ services:
         - wordpress_volume:/var/www/wordpress
       container_name: ftp
       restart : always
-
+    static_web:
+      build:
+        context: ./requirements/bonus/static_web
+        dockerfile: Dockerfile
+      image: static_web:inception
+      networks:
+        - inception
+      ports:
+        - "3000:3000"
+      container_name: static_web
+      restart: always
+      
 networks:
   inception:
     driver: bridge
     name: inception
 
 volumes:
+  static_web_volume:
+      name: static_web_volume
+      driver_opts:
+        type: none
+        device: /home/bamrouch/data/static_web
+        o: bind
   mariadb_volume:
     name: mariadb_volume
     driver_opts:
