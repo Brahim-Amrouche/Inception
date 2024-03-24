@@ -31,8 +31,7 @@ COPY ./tools/wordpress_install.sh /home/wordpress_install.sh
 
 #changing the script to become executable , and creating a directory that fpm will need
 RUN chmod u+x /home/wordpress_install.sh && \
-    mkdir /run/php/ && chown www-data:www-data /run/php && \
-    chmod -R 775 /var/www/wordpress
+    mkdir /run/php/ && chown www-data:www-data /run/php
 
 #Copying configuration of fpm
 COPY  ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf

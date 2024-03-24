@@ -20,9 +20,6 @@ wp --allow-root config set WP_CACHE true --raw
 wp --allow-root redis flush
 wp --allow-root redis enable
 
-
-chown -R www-data:www-data /var/www/wordpress
-
 echo ">> Wordpress Finished Installing <<"
 
 echo ">> Launching php-fpm <<"

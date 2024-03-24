@@ -19,6 +19,7 @@ services:
       networks:
         - inception
       container_name: mariadb
+      restart : always
     wordpress:
       build:
         context: ./requirements/wordpress
@@ -41,6 +42,7 @@ services:
       networks:
         - inception
       container_name: wordpress
+      restart : always
     nginx:
       build:
         context: ./requirements/nginx
@@ -59,16 +61,37 @@ services:
       ports:
         - "443:443"
       container_name: nginx
+      restart : always    
     redis:
-        build:
-          context: ./requirements/bonus/redis
-          dockerfile: Dockerfile
-          args:
-            REDIS_AUTH_PASSWORD : ${REDIS_AUTH_PASSWORD}
-        image: redis:inception
-        networks:
-          - inception
-        container_name: redis
+      build:
+        context: ./requirements/bonus/redis
+        dockerfile: Dockerfile
+        args:
+          REDIS_AUTH_PASSWORD : ${REDIS_AUTH_PASSWORD}
+      image: redis:inception
+      networks:
+        - inception
+      container_name: redis
+      restart : always
+    ftp:
+      build:
+        context: ./requirements/bonus/ftp
+        dockerfile: Dockerfile
+        args:
+          FTP_USER : ${FTP_USER}
+          FTP_USER_PASSWORD : ${FTP_USER_PASSWORD}
+      image: ftp:inception
+      networks:
+        - inception
+      ports:
+        - "21:21"
+        - "20:20"
+      depends_on:
+        - wordpress
+      volumes:
+        - wordpress_volume:/var/www/wordpress
+      container_name: ftp
+      restart : always
 
 networks:
   inception:
