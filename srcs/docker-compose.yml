@@ -1,8 +1,5 @@
 version : '3.8'
 
-# env_files:
-#   - .env
-
 services:
     mariadb:
       build:
@@ -52,9 +49,12 @@ services:
           CERTIFICATE_PATH : ${CERTIFICATE_PATH}
           CERTIFICATE_KEY_PATH : ${CERTIFICATE_KEY_PATH}
           STATIC_WEB_URL : ${STATIC_WEB_URL}
+          ADMINER_URL: ${ADMINER_URL}
       image: nginx:inception
       depends_on:
         - wordpress
+        - static_web
+        - adminer
       volumes:
         - wordpress_volume:/var/www/wordpress
       networks:
@@ -100,11 +100,20 @@ services:
       image: static_web:inception
       networks:
         - inception
-      ports:
-        - "3000:3000"
+      volumes:
+        - static_web_volume:/var/static_web
       container_name: static_web
       restart: always
-      
+    adminer:
+      build:
+        context: ./requirements/bonus/adminer
+        dockerfile: Dockerfile
+      image: adminer:inception
+      networks:
+        - inception
+      container_name: adminer
+      restart: always
+
 networks:
   inception:
     driver: bridge

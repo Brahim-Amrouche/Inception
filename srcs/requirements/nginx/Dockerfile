@@ -23,6 +23,8 @@ ARG CERTIFICATE_KEY_PATH
 ENV CERTIFICATE_KEY_PATH=${CERTIFICATE_KEY_PATH}
 ARG STATIC_WEB_URL
 ENV STATIC_WEB_URL=${STATIC_WEB_URL}
+ARG ADMINER_URL
+ENV ADMINER_URL=${ADMINER_URL}
 
 COPY ./conf/template_conf  /etc/nginx/conf.d/template_conf
 COPY ./tools/nginx_conf.sh /home/nginx_conf.sh
