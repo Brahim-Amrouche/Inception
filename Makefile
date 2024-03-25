@@ -6,9 +6,6 @@ DATA_ROOT = ~/data
 all:
 	docker-compose -f ${COMPOSE_FILE} --env-file ${ENV_PATH} up -d
 
-mariadb:
-	docker-compose -f ${COMPOSE_FILE} --env-file ${ENV_PATH} up -d --force-recreate --no-deps --build mariadb
-
 down :
 	docker-compose -f ${COMPOSE_FILE} down
 
