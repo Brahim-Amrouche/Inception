@@ -15,6 +15,10 @@ RUN curl -O https://nodejs.org/dist/v20.11.1/node-v20.11.1-linux-x64.tar.xz && \
 
 WORKDIR /var/static_web
 
+COPY ./conf/static_web .
+
+RUN npm install
+
 EXPOSE 3000
 
 CMD npm run dev

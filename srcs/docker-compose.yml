@@ -30,6 +30,9 @@ services:
           WORDPRESS_URL : ${WORDPRESS_URL}
           WORDPRESS_WEBSITE_TITLE : ${WORDPRESS_WEBSITE_TITLE}
           WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
+          WORDPRESS_USER: ${WORDPRESS_USER}
+          WORDPRESS_USER_EMAIL: ${WORDPRESS_USER_EMAIL}
+          WORDPRESS_USER_PASSWORD: ${WORDPRESS_USER_PASSWORD}
       image: wordpress:inception
       depends_on:
         - mariadb
